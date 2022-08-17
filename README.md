@@ -1,34 +1,11 @@
-# Xartic
+## XamlLiveEditor
 
-[![Build status](https://build.appcenter.ms/v0.1/apps/bbcaac69-356b-4e9c-b5fb-c2db76292402/branches/main/badge)](https://appcenter.ms)
-[![Publish Api](https://github.com/felipebaltazar/Xartic/actions/workflows/dotnet.yml/badge.svg)](https://github.com/felipebaltazar/Xartic/actions/workflows/dotnet.yml)
+Live editor for code released apps
 
- Gartic clone made with Xamarin, SignalR, Vue.JS and Aspnet.Core
+Editor (Web):
+https://webxamleditor.azurewebsites.net/
 
-![xartic](https://user-images.githubusercontent.com/19656249/102704785-7f000980-425e-11eb-9e7f-1a9fc4a5ee1f.gif)
+Editor (Api):
+https://liveeditorapi.azurewebsites.net/docs/index.html
 
-## Downloads
-
-https://install.appcenter.ms/users/felipebaltazar/apps/xartic/distribution_groups/global
-
-![frame](https://user-images.githubusercontent.com/19656249/102704802-c6869580-425e-11eb-8962-addc7be4cec7.png)
-
-
-## Xartic Hub (SignalR)
-
-- Self-hosted on Azure F1 (Brazil)
-
-![image](https://user-images.githubusercontent.com/19656249/102704862-bae79e80-425f-11eb-8d7e-f8a9ba328d7a.png)
-
-
-## Xartic App (Xamarin)
-
-- Without frameworks MVVM but based on Prism navigation
-
-![image](https://user-images.githubusercontent.com/19656249/102704546-a5707580-425b-11eb-9ee5-394b161f5e4d.png)
-
-## Xartic Web (AspnetCore + VueJs)
-
-- VueJs + SignalR JS client
-
-![image](https://user-images.githubusercontent.com/19656249/102704543-9c7fa400-425b-11eb-97c8-3c351782d8f6.png)
+![LiveCodeEditor](https://user-images.githubusercontent.com/19656249/185028242-ac9d1554-cf6f-428c-b339-c8d9de6e0ace.gif)
