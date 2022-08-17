@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "Editor";
+}
+
+<div style="color: white; font-weight: bold;">
+    <span>Device Id:</span>
+    <span id="device-id-lbl"/>
+</div>
+
+<div id="container" style="height:800px;">
+</div>
+ 
+<script>var require = { paths: { 'vs': 'lib/monaco-editor/min/vs' } };</script>
+<script src="lib/monaco-editor/min/vs/loader.js"></script>
+<script src="lib/monaco-editor/min/vs/editor/editor.main.nls.js"></script>
+<script src="lib/monaco-editor/min/vs/editor/editor.main.js"></script>
+
+<script>
+var myEditor;
+var properties = [];
+var deviceId = generateUUID();
+
+var h_div = document.getElementById('container');
+
+document.getElementById('device-id-lbl').innerText = deviceId;
+
+myEditor = monaco.editor.create(h_div, {
+        language: 'xml',
+		theme: 'vs-dark',
+        readOnly: false,
+        autoIndent: true,
+        formatOnPaste: true,
+        formatOnType: true
+});
+
+myEditor.getModel().onDidChangeContent((event) => {
+    onCodeChanged(myEditor.getValue())
+});
+
+startSignalR(myEditor, deviceId);
+</script>
