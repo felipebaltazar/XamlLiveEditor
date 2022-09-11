@@ -4,7 +4,7 @@ let connectionId;
 
 function startSignalR(editor, deviceId) {
     connection = new signalR.HubConnectionBuilder()
-        .withUrl("https://liveeditorapi.azurewebsites.net/LiveEditor?connectionId=" + deviceId + "&iseditor=True")
+        .withUrl("https://localhost:44330/LiveEditor?connectionId=" + deviceId + "&iseditor=True")
         .withAutomaticReconnect()
         .configureLogging(signalR.LogLevel.Information)
         .build();

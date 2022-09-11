@@ -47,11 +47,11 @@ namespace LiveEditor.Api.Hub
         /// <param name="code">Novo código</param>
         /// <returns>Task</returns>
         [HubMethodName(nameof(CodeChanged))]
-        public Task CodeChanged(string deviceId, string code)
+        public Task CodeChanged(object deviceId, object code)
         {
             return Clients
-                .Group(deviceId)
-                .SendCoreAsync(nameof(CodeChanged), new object[] { code });
+                .Group(deviceId.ToString())
+                .SendCoreAsync(nameof(CodeChanged), new object[] { code.ToString() });
         }
 
         /// <summary>
@@ -61,11 +61,11 @@ namespace LiveEditor.Api.Hub
         /// <param name="code">Código da pagina atual</param>
         /// <returns>Task</returns>
         [HubMethodName(nameof(CurrentPageChanged))]
-        public Task CurrentPageChanged(string deviceId, string code)
+        public Task CurrentPageChanged(object deviceId, object code)
         {
             return Clients
-                .Group(deviceId)
-                .SendCoreAsync(nameof(CurrentPageChanged), new object[] { code });
+                .Group(deviceId.ToString())
+                .SendCoreAsync(nameof(CurrentPageChanged), new object[] { code.ToString() });
         }
 
         #endregion

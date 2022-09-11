@@ -22,7 +22,7 @@
             <param name="deviceId">Id do device conectado</param>
             <returns>Task</returns>
         </member>
-        <member name="M:LiveEditor.Api.Hub.LiveEditorHub.CodeChanged(System.String,System.String)">
+        <member name="M:LiveEditor.Api.Hub.LiveEditorHub.CodeChanged(System.Object,System.Object)">
             <summary>
             Ao alterar codigo no editor
             </summary>
@@ -30,7 +30,7 @@
             <param name="code">Novo código</param>
             <returns>Task</returns>
         </member>
-        <member name="M:LiveEditor.Api.Hub.LiveEditorHub.CurrentPageChanged(System.String,System.String)">
+        <member name="M:LiveEditor.Api.Hub.LiveEditorHub.CurrentPageChanged(System.Object,System.Object)">
             <summary>
             Ocorre ao alterar a pagina atual
             </summary>

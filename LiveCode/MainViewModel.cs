@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http.Connections.Client;
 using Microsoft.AspNetCore.SignalR.Client;
 using System;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
@@ -8,30 +9,17 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Resources = LiveCodeXamlEditor.LiveEditorResources;
 
 namespace LiveCode
 {
     public class MainViewModel : ObservableObject
     {
-        private const string PAGEXAML = @"<?xml version=""1.0"" encoding=""utf-8"" ?>
-<ContentPage xmlns = ""http://xamarin.com/schemas/2014/forms""
-             xmlns:x=""http://schemas.microsoft.com/winfx/2009/xaml""
-             x:Class=""LiveCode.EmptyPage"">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text = ""Welcome to Xamarin.Forms!""
-                VerticalOptions=""CenterAndExpand""
-                HorizontalOptions=""CenterAndExpand"" />
-        </StackLayout>
-    </ContentPage.Content>
-</ContentPage>";
-
-
         private readonly Page _currentPage;
         private readonly Page _nextPage;
         private string _code;
 
-        public string Code 
+        public string Code
         {
             get => _code;
             set => SetProperty(ref _code, value);
@@ -47,20 +35,22 @@ namespace LiveCode
 
         private async Task LoginCommandExecuteAsync()
         {
-            if (!Guid.TryParse(Code, out _))
+            if (!Code.All(c => char.IsDigit(c)))
                 return;
 
-           App.SignalRConnection = new HubConnectionBuilder()
-                .WithUrl($"https://liveeditorapi.azurewebsites.net/LiveEditor?connectionId={Code}&iseditor=False", BuildOptions)
-                .WithAutomaticReconnect()
-                .Build();
+            App.SignalRConnection = new HubConnectionBuilder()
+                 .WithUrl($"https://liveeditorapi.azurewebsites.net/LiveEditor?connectionId={Code}&iseditor=False", BuildOptions)
+                 .WithAutomaticReconnect()
+                 .Build();
 
             await App.SignalRConnection.StartAsync();
 
             if (App.SignalRConnection.State == HubConnectionState.Connected)
             {
                 await _currentPage.Navigation.PushAsync(_nextPage);
-                await App.SignalRConnection.SendAsync("CurrentPageChanged", Code, PAGEXAML).ConfigureAwait(false);
+
+                var pageXaml = Resources.XamlValues.FirstOrDefault(x => x.Key == _nextPage.GetType().Name).Value;
+                await App.SignalRConnection.SendAsync("CurrentPageChanged", Code, pageXaml).ConfigureAwait(false);
 
                 App.SignalRConnection.On<string>("CodeChanged", OnCodeChanged);
                 App.SignalRConnection.On("RequestCurrentPage", OnRequestCurrentPage);
@@ -69,7 +59,14 @@ namespace LiveCode
 
         private void OnRequestCurrentPage()
         {
-            _ = App.SignalRConnection.SendAsync("CurrentPageChanged", Code, PAGEXAML);
+            var currentPage = Application.Current.MainPage;
+            while (currentPage is NavigationPage nav)
+            {
+                currentPage = nav.CurrentPage;
+            }
+
+            var pageXaml = Resources.XamlValues.FirstOrDefault(x => x.Key == currentPage.GetType().Name).Value;
+            _ = App.SignalRConnection.SendAsync("CurrentPageChanged", Code, pageXaml);
         }
 
         private void OnCodeChanged(string newXaml)
