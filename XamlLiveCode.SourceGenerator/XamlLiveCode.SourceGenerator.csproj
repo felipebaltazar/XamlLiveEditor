@@ -4,6 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeBuildOutput>false</IncludeBuildOutput>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/felipebaltazar/XamlLiveEditor</PackageProjectUrl>
     <RepositoryUrl>https://github.com/felipebaltazar/XamlLiveEditor</RepositoryUrl>
     <PackageTags>hotreload, xamarin.forms, vscode,onlineEditor</PackageTags>
@@ -23,6 +24,10 @@
     <EmbeddedResource Remove="bin\**" />
     <None Remove="bin\**" />
     <Folder Remove="bin\**"/>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
